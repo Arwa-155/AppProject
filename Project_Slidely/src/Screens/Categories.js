@@ -134,7 +134,7 @@ const Categories = (props) => {
                         />
                     </View>
                     <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>data structure </Text>
+                        <Text style={styles.cardTitle}>data structure  CS 464</Text>
                         <Text style={styles.cardDetails}>
                             Amazing description for this Category
                         </Text>
