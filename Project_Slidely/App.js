@@ -11,7 +11,7 @@ import Login from './src/Screens/Login';
 import Signup from './src/Screens/SignUp';
 import Profile from './src/Screens/Profile';
 import Categories from './src/Screens/Categories';
-// import Search from './src/Screens/Search'
+import Search from './src/Screens/Search'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,7 +29,7 @@ function Tab_in_Stack(){
         } else if (route.name === 'Categories') {
           iconName = focused ? 'list' : 'list-outline';
         } else if (route.name === 'Search') {
-          iconName = focused ? 'android-search' : 'android-search-outline';
+          iconName = focused ? 'search' : 'search-outline';
         }
         return <Ionicons name={iconName} size={size} color={color} />;
       },
@@ -39,7 +39,7 @@ function Tab_in_Stack(){
     })}>
       <Tab.Screen name='Home' component={Home}></Tab.Screen>
       <Tab.Screen name='Categories' component={Categories}></Tab.Screen>
-      {/* <Tab.Screen name='Search' component={Search}></Tab.Screen> */}
+      <Tab.Screen name='Search' component={Search}></Tab.Screen>
       <Tab.Screen name='Profile' component={Profile}></Tab.Screen>
     </Tab.Navigator>
   );
@@ -66,5 +66,6 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
 
 
