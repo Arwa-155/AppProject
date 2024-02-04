@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   mainview: {
-    marginTop: 30, //0
+    marginTop: 20, // safe arwa
     flex: 1,// none
 
 

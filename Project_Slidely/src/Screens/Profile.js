@@ -17,7 +17,7 @@ const Profile = (props) => {
     return (
         <View style={styles.root}>
             <LinearGradient
-                colors={['#FF8C00', '#FF8C00']}
+                colors={['#009999', '#00BFBF']}
                 style={{ height: "20%" }}
             >
                 <View style={{ flexDirection: 'row', marginTop: "10%" }}>
@@ -42,7 +42,7 @@ const Profile = (props) => {
 
             <Card style={styles.mycard} onPress={() => { Linking.openURL("mailto:Noor@gmail.com") }}>
                 <View style={styles.cardconent}>
-                    <MaterialIcons style={{ margin: 4 }} name="email" size={32} color='#FF8C00' />
+                    <MaterialIcons style={{ margin: 4 }} name="email" size={32} color='#009999' />
                     <Text style={{ marginTop: 12, fontSize: 15 }}>Noor8170001@cis.asu.edu.eg</Text>
 
                 </View>
@@ -51,21 +51,21 @@ const Profile = (props) => {
 
             <Card style={styles.mycard} onPress={() => { OpenDial() }}>
                 <View style={styles.cardconent}>
-                    <Entypo style={{ margin: 4 }} name="phone" size={32} color='#FF8C00' />
+                    <Entypo style={{ margin: 4 }} name="phone" size={32} color='#009999' />
                     <Text style={{ marginTop: 12, fontSize: 15 }}>01212836883</Text>
                 </View>
             </Card>
 
             <Card style={styles.mycard} >
                 <View style={styles.cardconent}>
-                    <FontAwesome5 style={{ margin: 4 }} name="home" size={24} color='#FF8C00' />
+                    <FontAwesome5 style={{ margin: 4 }} name="home" size={24} color='#009999' />
                     <Text style={{ marginTop: 12, fontSize: 15 }}> 129 El-Merghany Street,Heliopolis</Text>
                 </View>
             </Card>
 
 
 
-            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15, color: '#FF8C00' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15}}>
                 <Button icon="account-edit" color="#FF8C00" mode="contained" >
                     Edit
              </Button>
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         padding: 5
     },
     divider: {
-        backgroundColor: "#FF8C00",
+        backgroundColor: "#009999",
         height: 1,
         flex: 1,
         alignSelf: 'center'

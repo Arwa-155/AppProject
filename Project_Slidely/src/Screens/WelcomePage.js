@@ -19,9 +19,14 @@ export default function Login({ props }) {
         <Text style={styles.txt}> Create an account to start reading</Text>
 
         <View style={styles.button}>
-          <TouchableOpacity style={styles.inBut} onPress={() => { navigation.navigate('PageOne') }}>
+          <TouchableOpacity style={styles.inBut} onPress={() => { navigation.navigate('Signup') }}>
             <View>
-              <Text style={styles.textSign}> Get Started </Text>
+              <Text style={styles.textSign}> Sign Up </Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.inBut} onPress={() => { navigation.navigate('Login') }}>
+            <View>
+              <Text style={styles.textSign}> Log In </Text>
             </View>
           </TouchableOpacity>
         </View>

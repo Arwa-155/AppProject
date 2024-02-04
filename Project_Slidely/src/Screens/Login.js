@@ -1,15 +1,34 @@
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
+import auth from '../../firebase'
 
 
 
 export default function Login({ props }) {
   const navigation = useNavigation(); // Initialize the navigation hook
+  const [email, setEamail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Log In 
+        const user = userCredential.user;
+        navigation.navigate('PageTwo')
+        console.log('Sign Up seccesfuly')
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage)
+      });
+  }
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.loginContainer}>
         <Image style={styles.logo} source={require('./Images/Bookstore_logo.png')}></Image>
       </View>
@@ -18,13 +37,22 @@ export default function Login({ props }) {
         <Text style={styles.text_header}> Welcome Back!</Text>
         <View style={styles.action}>
           <FontAwesome name='user-o' color='#009999' style={styles.smallIcon}></FontAwesome>
-          <TextInput placeholder='Email' style={styles.textInput} ></TextInput>
+          <TextInput
+            placeholder='Email'
+            value={email}
+            onChangeText={setEamail}
+            style={styles.textInput} />
         </View>
 
 
         <View style={styles.action}>
           <FontAwesome name='lock' color='#009999' style={styles.smallIcon}></FontAwesome>
-          <TextInput placeholder='Password' style={styles.textInput} ></TextInput>
+          <TextInput
+            placeholder='Password'
+            value={password}
+            onChangeText={setPassword}
+            style={styles.textInput}
+            secureTextEntry ></TextInput>
         </View>
 
 
@@ -33,7 +61,7 @@ export default function Login({ props }) {
         </View>
 
         <View style={styles.button}>
-          <TouchableOpacity style={styles.inBut} onPress={() => { navigation.navigate('PageTwo') }}>
+          <TouchableOpacity style={styles.inBut} onPress={handleLogin}>
             <View>
               <Text style={styles.textSign}> Login</Text>
             </View>
@@ -49,7 +77,7 @@ export default function Login({ props }) {
 
         </View>
       </View>
-    </View>
+    </ScrollView>
 
   )
 }

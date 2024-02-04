@@ -17,7 +17,7 @@ const Categories = (props) => {
         <View style={{ backgroundColor: 'white' }}>
             <LinearGradient
                 // color top down 
-                colors={['#FF8C00', '#FF8C00']}
+                colors={['#009999', '#009999']}
                 style={{ height: "20%" }}
             >
                 <View style={{ flexDirection: 'row', marginTop: '13%', marginBottom: 20 }}>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     divider: {
-        backgroundColor: "#FF8C00",
+        backgroundColor: "#009999",
         height: 1,
         flex: 1,
         alignSelf: 'center'

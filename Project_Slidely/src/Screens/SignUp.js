@@ -1,51 +1,87 @@
-import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
+import auth from '../../firebase'
 
 
 
 export default function SignUp({ props }) {
   const navigation = useNavigation(); // Initialize the navigation hook
+  const [email, setEamail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [compassword, setComPassword] = React.useState('');
+  const [name, setName] = React.useState('');
+
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password, name , compassword)
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+        navigation.navigate('PageTwo')
+        console.log('Sign Up seccesfuly')
+        console.log(compassword) // For checking if I capture cofirm pasword correctly
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage)
+      });
+  }
 
   return (
-    <View>
-      <View style={styles.loginContainer}>
+    <ScrollView>
+      <View style={styles.SignUpContainer}>
         <Image style={styles.logo} source={require('./Images/Bookstore_logo.png')}></Image>
       </View>
 
-      <View style={styles.loginContainer}>
+      <View style={styles.SignUpContainer}>
         <Text style={styles.text_header}> Sign Up</Text>
         <View style={styles.action}>
           <FontAwesome name='user-o' color='#009999' style={styles.smallIcon}></FontAwesome>
-          <TextInput placeholder='Name' style={styles.textInput} ></TextInput>
+          <TextInput
+            placeholder='Name'
+            value={name}
+            onChangeText={setName}
+            style={styles.textInput} />
         </View>
 
 
         <View style={styles.action}>
           <FontAwesome name='envelope' color='#009999' style={styles.smallIcon}></FontAwesome>
-          <TextInput placeholder='Email' style={styles.textInput} ></TextInput>
+          <TextInput
+            placeholder='Email'
+            value={email}
+            onChangeText={setEamail}
+            style={styles.textInput} />
         </View>
 
+
         <View style={styles.action}>
-          <FontAwesome name='mobile' color='#009999' style={styles.smallIcon}></FontAwesome>
-          <TextInput placeholder='Email' style={styles.textInput} ></TextInput>
+          <FontAwesome name='lock' color='#009999' style={styles.smallIcon}></FontAwesome>
+          <TextInput
+            placeholder='Create Password'
+            value={password}
+            onChangeText={setPassword}
+            style={styles.textInput} 
+            secureTextEntry/>
         </View>
 
 
         <View style={styles.action}>
           <FontAwesome name='lock' color='#009999' style={styles.smallIcon}></FontAwesome>
-          <TextInput placeholder='Create Password' style={styles.textInput} ></TextInput>
-        </View>
-
-        <View style={styles.action}>
-          <FontAwesome name='lock' color='#009999' style={styles.smallIcon}></FontAwesome>
-          <TextInput placeholder='Confirm Password' style={styles.textInput} ></TextInput>
+          <TextInput
+            placeholder='Confirm Password' 
+            value={compassword}
+            onChangeText={setComPassword}
+            style={styles.textInput}
+            secureTextEntry />
         </View>
 
 
         <View style={styles.button}>
-          <TouchableOpacity style={styles.inBut} onPress={() => { navigation.navigate('PageTwo') }}>
+          <TouchableOpacity style={styles.inBut} onPress={handleSignUp}>
             <View>
               <Text style={styles.textSign}> Sign Up</Text>
             </View>
@@ -54,7 +90,7 @@ export default function SignUp({ props }) {
 
 
       </View>
-    </View>
+    </ScrollView>
 
   )
 }
@@ -98,12 +134,12 @@ const styles = StyleSheet.create({
     marginTop: -12,
     // color: '#009999',
   },
-  loginContainer: {
+  SignUpContainer: {
     // backgroundColor: '#fff',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingVertical: 20,
   },
   text_header: {
     color: '#009999',
