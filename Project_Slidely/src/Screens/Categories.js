@@ -4,9 +4,19 @@ import { LinearGradient } from 'expo-linear-gradient';
 //
 
 const Categories = (props) => {
+    const array = [
+        { id: 1, title: "Artificial Intelligence (AI) CS 361", sourse1: require('../Screens/Images/Ai.png') },
+        { id: 2, title: "Software Engineering CS 290", sourse1: require('../Screens/Images/soft.png') },
+        { id: 3, title: "Computer Networks CS 330", sourse1: require('../Screens/Images/newtork.png') },
+        { id: 4, title: "Human-Computer Interaction CS 351", sourse1: require('../Screens/Images/hci.png') },
+        { id: 5, title: "Deep learning CS 464", sourse1: require('../Screens/Images/deep.png') },
+        { id: 6, title: "Database CS 370", sourse1: require('../Screens/Images/database.png') },
+        { id: 7, title: "data structure", sourse1: require('../Screens/Images/datastracture.png') }
+    ]
     return (
         <View style={{ backgroundColor: 'white' }}>
             <LinearGradient
+                // color top down 
                 colors={['#FF8C00', '#FF8C00']}
                 style={{ height: "20%" }}
             >
@@ -22,124 +32,30 @@ const Categories = (props) => {
 
 
             <ScrollView>
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image
-                            source={require('../Screens/Images/Ai.png')}
-                            resizeMode="stretch"
-                            style={styles.cardImg}
-                        />
-                    </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>Artificial Intelligence (AI) CS 361</Text>
-                       
-                        <Text style={styles.cardDetails}>
-                            Amazing description for this Category
-                        </Text>
-                    </View>
-                </View>
 
 
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image
-                            source={require('../Screens/Images/soft.png')}
-                            resizeMode="stretch"
-                            style={styles.cardImg}
-                        />
-                    </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>Software Engineering CS 290</Text>
-                       
-                        <Text style={styles.cardDetails}>
-                            Amazing description for this Category
-                        </Text>
-                    </View>
-                </View>
+                {
+                    array.map((item) => (
+                        <View style={styles.card} key={item.id}>
+                            <View style={styles.cardImgWrapper}>
+                                <Image
+                                    source={item.sourse1}
+                                    resizeMode="stretch"
+                                    style={styles.cardImg}
+                                />
+                            </View>
+                            <View style={styles.cardInfo}>
+                                <Text style={styles.cardTitle}>{item.title}</Text>
 
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image
-                            source={require('../Screens/Images/newtork.png')}
-                            resizeMode="stretch"
-                            style={styles.cardImg}
-                        />
-                    </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>Computer Networks CS 330</Text>
-                      
-                        <Text style={styles.cardDetails}>
-                            Amazing description for this Category
-                        </Text>
-                    </View>
-                </View>
+                                <Text style={styles.cardDetails}>
+                                    Amazing description for this Category
+                                </Text>
+                            </View>
+                        </View>
+                    ))
+                }
 
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image
-                            source={require('../Screens/Images/hci.png')}
-                            resizeMode="stretch"
-                            style={styles.cardImg}
-                        />
-                    </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>Human-Computer Interaction CS 351</Text>
-                       
-                        <Text style={styles.cardDetails}>
-                            Amazing description for this Category
-                        </Text>
-                    </View>
-                </View>
 
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image
-                            source={require('../Screens/Images/deep.png')}
-                            resizeMode="stretch"
-                            style={styles.cardImg}
-                        />
-                    </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>Deep learning CS 464</Text>
-                       
-                        <Text style={styles.cardDetails}>
-                            Amazing description for this Category
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image
-                            source={require('../Screens/Images/database.png')}
-                            resizeMode="stretch"
-                            style={styles.cardImg}
-                        />
-                    </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>Database CS 370</Text>
-                    
-                        <Text style={styles.cardDetails}>
-                            Amazing description for this Category
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={styles.card}>
-                    <View style={styles.cardImgWrapper}>
-                        <Image
-                            source={require('../Screens/Images/datastracture.png')}
-                            resizeMode="stretch"
-                            style={styles.cardImg}
-                        />
-                    </View>
-                    <View style={styles.cardInfo}>
-                        <Text style={styles.cardTitle}>data structure  CS 464</Text>
-                        <Text style={styles.cardDetails}>
-                            Amazing description for this Category
-                        </Text>
-                    </View>
-                </View>
 
             </ScrollView>
         </View>
