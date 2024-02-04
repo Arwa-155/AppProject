@@ -11,7 +11,7 @@ import Login from './src/Screens/Login';
 import Signup from './src/Screens/SignUp';
 import Profile from './src/Screens/Profile';
 import Categories from './src/Screens/Categories';
-import Search from './src/Screens/Search'
+import Search from './src/Screens/SearchFilter'
 import Quote from './src/Screens/Quote'
 
 const Stack = createNativeStackNavigator();
