@@ -29,7 +29,7 @@ function Tab_in_Stack() {
           iconName = focused ? 'person' : 'person-outline';
         } else if (route.name === 'Categories') {
           iconName = focused ? 'list' : 'list-outline';
-        } else if (route.name === 'SearchFilter') {
+        } else if (route.name === 'Search') {
           iconName = focused ? 'search' : 'search-outline';
         }
         return <Ionicons name={iconName} size={size} color={color} />;
