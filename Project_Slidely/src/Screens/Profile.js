@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, Linking, Platform, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, Linking, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Title, Card, Button } from 'react-native-paper';
 import { MaterialIcons, Entypo, FontAwesome5 } from '@expo/vector-icons';
-import { useRoute } from '@react-navigation/native';
-import { ref, get, set } from 'firebase/database';
+import { ref, get } from "firebase/database";
 import { realtimeDb } from './firebaseConfig';
+import { useRoute } from '@react-navigation/native';
+import { uid } from "uid";
+
 const Profile = () => {
   const route = useRoute();
   const { id } = route.params;
   const [user, setUser] = useState(null);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [newName, setNewName] = useState('');
+  const [newEmail, setNewEmail] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -20,10 +23,8 @@ const Profile = () => {
         const userDataSnapshot = await get(userDataRef);
         if (userDataSnapshot.exists()) {
           setUser(userDataSnapshot.val());
-          setName(userDataSnapshot.val().name);
-          setEmail(userDataSnapshot.val().email);
         } else {
-          console.log('User not found');
+          console.log("User not found");
         }
       } catch (error) {
         console.log(error);
@@ -33,14 +34,37 @@ const Profile = () => {
     getUserData();
   }, [id]);
 
-  const handleSaveChanges = () => {
+  if (!user) {
+    return <Text>Loading...</Text>;
+  }
+
+  const { name, email } = user;
+
+  const OpenDial = () => {
+    let phoneNumber = '';
+    if (Platform.OS === 'android') {
+      phoneNumber = 'tel:${01212836883}';
+    } else {
+      phoneNumber = 'telprompt:${01212836883}';
+    }
+
+    Linking.openURL(phoneNumber);
+  };
+
+  const updateUser = async () => {
     try {
-      set(ref(realtimeDb, id), {
-        ...user,
-        name: name,
-        email: email,
-      });
-      console.log('Changes saved successfully');
+      if (newName && newEmail) {
+        const userDataRef = ref(realtimeDb, id);
+        await set(userDataRef, { name: newName, email: newEmail });
+
+        setUser({ ...user, name: newName, email: newEmail });
+
+        setIsEditing(false); // Hide input boxes after updating
+
+        console.log('User data updated successfully.');
+      } else {
+        console.log('Invalid input. Please provide both name and email.');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -63,14 +87,20 @@ const Profile = () => {
         <Image style={{ width: 140, height: 140, borderRadius: 140 / 2, margin: -50 }} source={require('./Images/icon.png')} />
       </View>
 
-      <View style={{ alignItems: 'center', marginTop: 55, margin: 15 }}>
-        <Title>{name}</Title>
-      </View>
 
       <Card style={styles.mycard} onPress={() => { Linking.openURL('mailto:Noor@gmail.com') }}>
         <View style={styles.cardconent}>
           <MaterialIcons style={{ margin: 4 }} name="email" size={32} color="#009999" />
-          <Text style={{ marginTop: 12, fontSize: 15 }}>{email}</Text>
+          {isEditing ? (
+            <TextInput
+              
+              placeholder="New Email"
+              value={newEmail}
+              onChangeText={setNewEmail}
+            />
+          ) : (
+            <Text style={{ marginTop: 12, fontSize: 15 }}>{email}</Text>
+          )}
         </View>
       </Card>
 
@@ -81,31 +111,47 @@ const Profile = () => {
         </View>
       </Card>
 
-      <Card style={styles.mycard}>
+      <Card style={styles.javascriptmycard}>
         <View style={styles.cardconent}>
           <FontAwesome5 style={{ margin: 4 }} name="home" size={24} color="#009999" />
           <Text style={{ marginTop: 12, fontSize: 15 }}>129 El-Merghany Street, Heliopolis</Text>
         </View>
       </Card>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15 }}>
-        <TextInput
-          style={styles.input}
-          value={name}
-          onChangeText={setName}
-          placeholder="Name"
-        />
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Email"
-        />
-      </View>
 
-      <Button icon="account-edit" color="#FF8C00" mode="contained" onPress={handleSaveChanges}>
-        Save Changes
-      </Button>
+      <View style={{ alignItems: 'center', marginTop: 55, margin: 15 }}>
+        {isEditing ? (
+          <View>
+            <View style={styles.input}>
+            <TextInput
+              
+              placeholder="update name"
+              value={newName}
+              onChangeText={setNewName}
+            />
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="update Email"
+              value={newEmail}
+              onChangeText={setNewEmail}
+            />
+          </View>
+        ) : (
+          <Title>{name}</Title>
+        )}
+      </View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15 }}>
+        {isEditing ? (
+          <Button icon="account-check" color="#FF8C00" mode="contained" onPress={updateUser}>
+            Save
+          </Button>
+        ) : (
+          <Button icon="account-edit" color="#FF8C00" mode="contained" onPress={() => setIsEditing(true)}>
+            Edit
+          </Button>
+        )}
+      </View>
     </View>
   );
 };
@@ -114,16 +160,18 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: 'white',
+     
   },
   imagestyle: {
     alignItems: 'center',
     marginTop: 30,
+    marginBottom:50
   },
   mycard: {
     margin: 3,
     marginTop: 10,
   },
-  cardconent:{
+  cardconent: {
     flexDirection: 'row',
     padding: 5,
   },
@@ -133,15 +181,15 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'center',
   },
-  input: {
-    width: '40%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    marginBottom: 10,
-  },
+  input:{
+    borderWidth:2,
+    borderColor:'black',
+    width:200,
+    margin:5,
+    padding:10,
+    borderColor:'#009999'
+  }
+  
 });
 
 export default Profile;
