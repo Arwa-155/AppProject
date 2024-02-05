@@ -12,7 +12,7 @@ import Signup from './src/Screens/SignUp';
 import Profile from './src/Screens/Profile';
 import Quote from './src/Screens/Quote';
 import Categories from './src/Screens/Categories';
-import Search from './src/Screens/Search'
+import SearchFilter from './src/Screens/SearchFilter'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,7 +29,7 @@ function Tab_in_Stack() {
           iconName = focused ? 'person' : 'person-outline';
         } else if (route.name === 'Categories') {
           iconName = focused ? 'list' : 'list-outline';
-        } else if (route.name === 'Search') {
+        } else if (route.name === 'SearchFilter') {
           iconName = focused ? 'search' : 'search-outline';
         }
         return <Ionicons name={iconName} size={size} color={color} />;
@@ -40,7 +40,7 @@ function Tab_in_Stack() {
     })}>
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='Categories' component={Categories} />
-      <Tab.Screen name='Search' component={Search} />
+      <Tab.Screen name='Search' component={SearchFilter} />
       <Tab.Screen name='Quote' component={Quote} />
       <Tab.Screen name='Profile' component={Profile} />
     </Tab.Navigator>
