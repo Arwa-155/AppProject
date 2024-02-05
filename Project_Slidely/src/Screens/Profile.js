@@ -1,17 +1,48 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, Linking, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Image, Linking, Platform, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Title, Card, Button } from 'react-native-paper';
 import { MaterialIcons, Entypo, FontAwesome5 } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
+import { ref, get, set } from 'firebase/database';
+import { realtimeDb } from './firebaseConfig';
+const Profile = () => {
+  const route = useRoute();
+  const { id } = route.params;
+  const [user, setUser] = useState(null);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-const Profile = ({ route }) => {
-  const { name, email } = route.params;
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userDataRef = ref(realtimeDb, id);
+        const userDataSnapshot = await get(userDataRef);
+        if (userDataSnapshot.exists()) {
+          setUser(userDataSnapshot.val());
+          setName(userDataSnapshot.val().name);
+          setEmail(userDataSnapshot.val().email);
+        } else {
+          console.log('User not found');
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  const OpenDial = () => {
-    if (Platform.OS === 'android') {
-      Linking.openURL('tel:01025478993');
-    } else {
-      Linking.openURL('telprompt:01025478993');
+    getUserData();
+  }, [id]);
+
+  const handleSaveChanges = () => {
+    try {
+      set(ref(realtimeDb, id), {
+        ...user,
+        name: name,
+        email: email,
+      });
+      console.log('Changes saved successfully');
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -58,10 +89,23 @@ const Profile = ({ route }) => {
       </Card>
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15 }}>
-        <Button icon="account-edit" color="#FF8C00" mode="contained">
-          Edit
-        </Button>
+        <TextInput
+          style={styles.input}
+          value={name}
+          onChangeText={setName}
+          placeholder="Name"
+        />
+        <TextInput
+          style={styles.input}
+          value={email}
+          onChangeText={setEmail}
+          placeholder="Email"
+        />
       </View>
+
+      <Button icon="account-edit" color="#FF8C00" mode="contained" onPress={handleSaveChanges}>
+        Save Changes
+      </Button>
     </View>
   );
 };
@@ -79,7 +123,7 @@ const styles = StyleSheet.create({
     margin: 3,
     marginTop: 10,
   },
-  cardconent: {
+  cardconent:{
     flexDirection: 'row',
     padding: 5,
   },
@@ -88,6 +132,15 @@ const styles = StyleSheet.create({
     height: 1,
     flex: 1,
     alignSelf: 'center',
+  },
+  input: {
+    width: '40%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
 });
 
