@@ -3,7 +3,7 @@ import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
-import auth from '../../firebase'
+import {auth} from '../../firebase'
 
 
 
@@ -18,7 +18,8 @@ export default function Login({ props }) {
         // Log In 
         const user = userCredential.user;
         navigation.navigate('PageTwo')
-        console.log('Sign Up seccesfuly')
+        console.log('Log In seccesfuly')
+        console.log(auth.currentUser.uid)
       })
       .catch((error) => {
         const errorCode = error.code;
