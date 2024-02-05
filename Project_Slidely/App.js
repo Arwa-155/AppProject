@@ -66,6 +66,8 @@ export default function App() {
       <Stack.Screen name='Welcome' component={Welcome}></Stack.Screen>
         <Stack.Screen name='PageOne' component={Login_and_Signup}></Stack.Screen>
         <Stack.Screen name='PageTwo' component={Tab_in_Stack}></Stack.Screen>
+          <Stack.Screen name='Profile' component={Profile}></Stack.Screen>
+        <Stack.Screen name="Signup" component={Signup} />
       </Stack.Navigator>
     </NavigationContainer>
   );
