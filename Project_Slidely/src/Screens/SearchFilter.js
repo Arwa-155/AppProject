@@ -83,13 +83,13 @@ const Filters = [
    image: "./Screens/Images/distributed.png",
    },
 
-// {
-//     id: 5,
-//    name:" Softwere Engineer2",
-//    CourseID:"CS392",
-//    Chapter:"1",
-//    image: "./Screens/Images/softwere2.png",
-//    },
+ {
+     id: 5,
+    name:" Softwere Engineer2",
+   CourseID:"CS392",
+   Chapter:"1",
+   image: "./Screens/Images/softwere2.png",
+   },
 
 {
     id: 6,
