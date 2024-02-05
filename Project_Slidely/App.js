@@ -9,16 +9,15 @@ import Welcome from './src/Screens/WelcomePage';
 import Home from './src/Screens/Home';
 import Login from './src/Screens/Login';
 import Signup from './src/Screens/SignUp';
-import Profile from './src/Screens/Profile';
+import Profile from './src/Screens/Profile';  
 import Categories from './src/Screens/Categories';
-import Search from './src/Screens/SearchFilter'
-import Quote from './src/Screens/Quote'
+import Search from './src/Screens/Search'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Tab_in_Stack(){
-  return(
+function Tab_in_Stack() {
+  return (
     <Tab.Navigator screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
@@ -29,10 +28,8 @@ function Tab_in_Stack(){
           iconName = focused ? 'person' : 'person-outline';
         } else if (route.name === 'Categories') {
           iconName = focused ? 'list' : 'list-outline';
-        } else if (route.name === 'SearchFilter') {
+        } else if (route.name === 'Search') {
           iconName = focused ? 'search' : 'search-outline';
-        } else if (route.name === 'Quote') {
-          iconName = focused ? 'book' : 'book-outline';
         }
         return <Ionicons name={iconName} size={size} color={color} />;
       },
@@ -40,20 +37,11 @@ function Tab_in_Stack(){
       tabBarInactiveTintColor: 'gray',
       headerShown: false,
     })}>
-      <Tab.Screen name='Home' component={Home}></Tab.Screen>
-      <Tab.Screen name='Categories' component={Categories}></Tab.Screen>
-      <Tab.Screen name='SearchFilter' component={SearchFilter}></Tab.Screen>
-        <Tab.Screen name='Quote' component={Quote}></Tab.Screen>
-      <Tab.Screen name='Profile' component={Profile}></Tab.Screen>
+      <Tab.Screen name='Home' component={Home} />
+      <Tab.Screen name='Categories' component={Categories} />
+      <Tab.Screen name='Search' component={Search} />
+      <Tab.Screen name='Profile' component={Profile} />
     </Tab.Navigator>
-  );
-}
-function Login_and_Signup(){
-  return(
-    <Stack.Navigator screenOptions={{headerShown: false}}>
-    <Stack.Screen name='Login' component={Login}></Stack.Screen>
-    <Stack.Screen name='Signup' component={Signup}></Stack.Screen>
-  </Stack.Navigator>
   );
 }
 
@@ -62,14 +50,12 @@ function Login_and_Signup(){
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-      <Stack.Screen name='Welcome' component={Welcome}></Stack.Screen>
-        <Stack.Screen name='PageOne' component={Login_and_Signup}></Stack.Screen>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='Welcome' component={Welcome}></Stack.Screen>
+        <Stack.Screen name='Login' component={Login}></Stack.Screen>
+        <Stack.Screen name='Signup' component={Signup}></Stack.Screen>
         <Stack.Screen name='PageTwo' component={Tab_in_Stack}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-
-
