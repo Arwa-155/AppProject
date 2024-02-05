@@ -4,7 +4,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
 import auth from '../../firebase'
-
+import { collection, getDocs } from "firebase/firestore";
+import { db, realtimeDb } from "./firebaseConfig";
+import {  ref, set } from "firebase/database";
+import { uid } from "uid";
+import { useState } from 'react';
 
 
 export default function SignUp({ props }) {
@@ -20,7 +24,14 @@ export default function SignUp({ props }) {
         // Signed up 
         const user = userCredential.user;
         navigation.navigate('PageTwo')
-         navigation.navigate('Profile', { name: name, email: email });
+        navigation.navigate('PageTwo');
+        console.log('Sign Up successfully');
+        set(ref(realtimeDb, uuId), {
+          name: name,
+          id: uuId,
+          email: email
+        });
+        navigation.navigate('Profile',params={id});
         console.log('Sign Up seccesfuly')
         console.log(compassword) // For checking if I capture cofirm pasword correctly
       })
