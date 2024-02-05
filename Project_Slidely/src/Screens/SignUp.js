@@ -3,47 +3,44 @@ import React from 'react';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigation } from '@react-navigation/native';
-import auth from '../../firebase'
-import { collection, getDocs } from "firebase/firestore";
-import { db, realtimeDb } from "./firebaseConfig";
-import {  ref, set } from "firebase/database";
-import { uid } from "uid";
-import { useState } from 'react';
+
+import { auth, db, realtimeDb } from '../../firebase'
+import { doc, setDoc } from 'firebase/firestore';
+
 
 
 export default function SignUp({ props }) {
+  const [name, setName] = React.useState('');
   const navigation = useNavigation(); // Initialize the navigation hook
-  const [email, setEamail] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [phone, setPhone] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [compassword, setComPassword] = React.useState('');
-  const [name, setName] = React.useState('');
-  const uuId = uid();
-
+ 
   const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password, name , compassword)
-      .then((userCredential) => {
-        // Signed up 
+    createUserWithEmailAndPassword(auth, email, password, name, phone, compassword)
+      .then(async (userCredential) => {
         const user = userCredential.user;
         navigation.navigate('PageTwo')
-        navigation.navigate('PageTwo');
-        console.log('Sign Up successfully');
-       
-        set(ref(realtimeDb, uuId), {
-          name: name,
-          id: uuId,
-          email: email
-        });
-        
-      setName("");
-        navigation.navigate('Profile', { id: uuId });
         console.log('Sign Up seccesfuly')
         console.log(compassword) // For checking if I capture cofirm pasword correctly
+        addUserToDatabase();
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorMessage)
+        console.log(errorCode)
       });
+  }
+
+  const addUserToDatabase = async () => {
+    await setDoc(doc(db, 'users', auth.currentUser.uid), {
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+    });
   }
 
   return (
@@ -69,7 +66,17 @@ export default function SignUp({ props }) {
           <TextInput
             placeholder='Email'
             value={email}
-            onChangeText={setEamail}
+            onChangeText={setEmail}
+            style={styles.textInput} />
+        </View>
+
+
+        <View style={styles.action}>
+          <FontAwesome name='mobile' color='#009999' style={styles.smallIcon}></FontAwesome>
+          <TextInput
+            placeholder='phone' 
+            value={phone}
+            onChangeText={setPhone}
             style={styles.textInput} />
         </View>
 
@@ -80,15 +87,15 @@ export default function SignUp({ props }) {
             placeholder='Create Password'
             value={password}
             onChangeText={setPassword}
-            style={styles.textInput} 
-            secureTextEntry/>
+            style={styles.textInput}
+            secureTextEntry />
         </View>
 
 
         <View style={styles.action}>
           <FontAwesome name='lock' color='#009999' style={styles.smallIcon}></FontAwesome>
           <TextInput
-            placeholder='Confirm Password' 
+            placeholder='Confirm Password'
             value={compassword}
             onChangeText={setComPassword}
             style={styles.textInput}
