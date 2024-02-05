@@ -17,6 +17,7 @@ export default function SignUp({ props }) {
   const [password, setPassword] = React.useState('');
   const [compassword, setComPassword] = React.useState('');
   const [name, setName] = React.useState('');
+  const uuId = uid();
 
   const handleSignUp = () => {
     createUserWithEmailAndPassword(auth, email, password, name , compassword)
@@ -26,12 +27,15 @@ export default function SignUp({ props }) {
         navigation.navigate('PageTwo')
         navigation.navigate('PageTwo');
         console.log('Sign Up successfully');
+       
         set(ref(realtimeDb, uuId), {
           name: name,
           id: uuId,
           email: email
         });
-        navigation.navigate('Profile',params={id});
+        
+      setName("");
+        navigation.navigate('Profile', { id: uuId });
         console.log('Sign Up seccesfuly')
         console.log(compassword) // For checking if I capture cofirm pasword correctly
       })
