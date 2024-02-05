@@ -9,7 +9,8 @@ import Welcome from './src/Screens/WelcomePage';
 import Home from './src/Screens/Home';
 import Login from './src/Screens/Login';
 import Signup from './src/Screens/SignUp';
-import Profile from './src/Screens/Profile';  
+import Profile from './src/Screens/Profile';
+import Quote from './src/Screens/Quote';
 import Categories from './src/Screens/Categories';
 import Search from './src/Screens/Search'
 
@@ -40,6 +41,7 @@ function Tab_in_Stack() {
       <Tab.Screen name='Home' component={Home} />
       <Tab.Screen name='Categories' component={Categories} />
       <Tab.Screen name='Search' component={Search} />
+      <Tab.Screen name='Quote' component={Quote} />
       <Tab.Screen name='Profile' component={Profile} />
     </Tab.Navigator>
   );
