@@ -20,6 +20,7 @@ export default function SignUp({ props }) {
         // Signed up 
         const user = userCredential.user;
         navigation.navigate('PageTwo')
+         navigation.navigate('Profile', { name: name, email: email });
         console.log('Sign Up seccesfuly')
         console.log(compassword) // For checking if I capture cofirm pasword correctly
       })
