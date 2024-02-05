@@ -31,6 +31,8 @@ function Tab_in_Stack() {
           iconName = focused ? 'list' : 'list-outline';
         } else if (route.name === 'Search') {
           iconName = focused ? 'search' : 'search-outline';
+        } else if (route.name === 'Quote') {
+          iconName = focused ? 'book' : 'book-outline';
         }
         return <Ionicons name={iconName} size={size} color={color} />;
       },
