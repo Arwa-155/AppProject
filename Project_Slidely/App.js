@@ -12,7 +12,7 @@ import Signup from './src/Screens/SignUp';
 import Profile from './src/Screens/Profile';
 import Quote from './src/Screens/Quote';
 import Categories from './src/Screens/Categories';
-import SearchFilter from './src/Components/SearchFilter'
+import SearchFilter from './src/Screens/SearchFilter'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
