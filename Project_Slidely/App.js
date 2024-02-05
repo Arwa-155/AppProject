@@ -29,7 +29,7 @@ function Tab_in_Stack(){
           iconName = focused ? 'person' : 'person-outline';
         } else if (route.name === 'Categories') {
           iconName = focused ? 'list' : 'list-outline';
-        } else if (route.name === 'Search') {
+        } else if (route.name === 'SearchFilter') {
           iconName = focused ? 'search' : 'search-outline';
         } else if (route.name === 'Quote') {
           iconName = focused ? 'book' : 'book-outline';
@@ -42,7 +42,7 @@ function Tab_in_Stack(){
     })}>
       <Tab.Screen name='Home' component={Home}></Tab.Screen>
       <Tab.Screen name='Categories' component={Categories}></Tab.Screen>
-      <Tab.Screen name='Search' component={Search}></Tab.Screen>
+      <Tab.Screen name='SearchFilter' component={SearchFilter}></Tab.Screen>
         <Tab.Screen name='Quote' component={Quote}></Tab.Screen>
       <Tab.Screen name='Profile' component={Profile}></Tab.Screen>
     </Tab.Navigator>
