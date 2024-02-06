@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   TextInputContainer: {
-    borderColor: 'green',
+    borderColor: '#009999',
     borderWidth: 2,
     paddingHorizontal: 36,
     paddingVertical: 8,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 10,
     marginHorizontal: 16,
-    backgroundColor: '#c3e3cf',
+    backgroundColor: '#92b39e',
     paddingHorizontal: 36,
     paddingVertical: 16,
     borderRadius: 6,
